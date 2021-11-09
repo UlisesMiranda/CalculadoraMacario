@@ -1,48 +1,109 @@
 package Calculadora;
 
-public class Calculadora 
-{
-        private double memoria=0;
-	private char operadorAnterior='=';
-        private boolean radianes=true;
+public class Calculadora {
+    
+    private int operadorAnterior ='0';
+    private double ANS = 0;
+    private boolean radianes=true;
+    
+    public void operacion(double numero, int operador, boolean Radianes)
+    {
+        if(operadorAnterior == 0) // Si es igual a '='
+                ANS = numero;
+        else 
+            switch(operadorAnterior)
+            {
+                case 1 : ANS += numero; break;
+                case 2 : ANS -= numero; break;
+                case 3 : ANS *= numero; break;
+                case 4 : ANS /= numero; break;
+                case 5 : ANS = inverso(); break;
+                case 6 : ANS = cuadrado(); break;
+                case 7 : ANS = raizCuadrada(); break;
+                case 8 : ANS = raizCubica(); break;
+                case 9 : 
+                    if (Radianes == isRadianes())
+                        ANS = seno();
+                    else {
+                        ANS = setDegrees(seno());
+                    }
+                    break;
+                case 10 : 
+                    if (Radianes == isRadianes())
+                        ANS = coseno();
+                    else {
+                        ANS = setDegrees(coseno());
+                    }
+                    break;
+                case 11 : 
+                    if (Radianes == isRadianes())
+                        ANS = tangente();
+                    else {
+                        ANS = setDegrees(tangente());
+                    }
+                    break;
+            }
+        operadorAnterior=operador;
+  
+    }
+    
+    public void clearANS()
+    {
+        this.ANS=0;
+    }
 
+    public double getANS()
+    {
+        return this.ANS;
+    }
 
-	public void operacion(double numero, char operador)
-	{
-            
-            if(operadorAnterior=='=')
-                memoria = numero;
-            else
-            	switch(operadorAnterior)
-		{
-                    case '+': memoria+=numero; break;
-                    case '-': memoria-=numero; break;
-		}
-            operadorAnterior=operador;
-	}
+    public void setRadianes()
+    {
+        this.radianes=false;
+    }
 
-        public void clearMemory()
-        {
-            memoria=0;
-        }
-        
-	public double getMemoria()
-	{
-		return memoria;
-	}
+    public double setDegrees(double conversion)
+    {
+        return  Math.toDegrees(conversion);
+    }
 
-        public void setRadianes()
-        {
-            radianes=false;
-        }
-        
-        public void setDegrees()
-        {
-            radianes=false;
-        }
-        
-        public boolean isRadianes()
-        {
-            return radianes;
-        }
+    public boolean isRadianes()
+    {
+        return this.radianes;
+    }
+    
+    public double seno()
+    {
+        return (Math.sin(this.ANS));
+    }
+   
+    public double coseno()
+    {
+        return (Math.cos(this.ANS));
+    }
+    
+    public double tangente()
+    {
+         return (Math.tan(this.ANS));
+    }
+    
+    public double cuadrado()
+    {
+        return (Math.pow(this.ANS, 2));
+    }
+    
+    public double inverso()
+    {
+        return (Math.pow(this.ANS, -1));
+    }
+    
+    public double raizCuadrada()
+    {
+        return (Math.sqrt(this.ANS));
+    }
+    
+    public double raizCubica()
+    {
+        return (Math.cbrt(this.ANS));
+    }
 }

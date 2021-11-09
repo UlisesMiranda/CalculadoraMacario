@@ -158,26 +158,26 @@ public class Vista extends JFrame
             
             char simbolo = textoBoton.charAt(0);
                 
-            if( (simbolo >= '0' && simbolo <= '9') || simbolo == '.') // En caso de número
+            if(simbolo=='C') 
+            {    
+                calculator.clearANS();
+                display.setText("");
+            }
+            else if( (simbolo >= '0' && simbolo <= '9') || simbolo == '.') // En caso de número
             {
                 if(nuevo) display.setText(""); // Si es una nueva cifra se borra el diaplay
-                    display.setText(display.getText()+simbolo);
+                    display.setText(display.getText()+ simbolo);
 		nuevo = false; // Se pone en falso cuando se pone el primer dígito de una cifra
             }
-            else if(simbolo=='+'||simbolo=='-'||simbolo=='*'||simbolo=='/'||simbolo=='=') // En caso de operador
+            else  // En caso de operador
             {
 		double numero = Double.parseDouble(display.getText());
 
 		calculator.operacion(numero,simbolo);         // Invoca la funcionalidad de la calculadora
 
-		display.setText(""+calculator.getMemoria());  // Obtiene el estado de la memoria de la calculadora
+		display.setText(""+calculator.getANS());  // Obtiene el estado de la memoria de la calculadora
 
 		nuevo = true;
-            }
-            else if(simbolo=='C') 
-            {    
-                calculator.clearMemory();
-                display.setText("");
             }
             
         }
@@ -190,5 +190,22 @@ public class Vista extends JFrame
             nuevo=true;
         } 
         
-        
+        public int idOperaciones (simbolo) { 
+            int operador;
+            switch(simbolo)
+		{
+                    case '+': operador = 1;break;
+                    case '-': operador = 2; break;
+                    case '+': operador = 3;break;
+                    case '-': operador = 4; break;
+                    case '+': operador = 5;break;
+                    case '-': operador = 6; break;
+                    case '+': operador = 7;break;
+                    case '-': operador = 8; break;
+                    case '+': operador = 9;break;
+                    case '-': operador = 10; break;
+                    case '+': operador = 11;break;
+                    
+		}
+        }
 }
