@@ -2,7 +2,7 @@ package Calculadora;
 
 public class Calculadora {
     
-    private int operadorAnterior ='0';
+    private int operadorAnterior = 0;
     private double ANS = 0;
     private boolean radianes=true;
     
@@ -25,21 +25,24 @@ public class Calculadora {
                     if (Radianes == isRadianes())
                         ANS = seno();
                     else {
-                        ANS = setDegrees(seno());
+                        ANS = Math.toRadians(ANS);
+                        ANS = seno();             
                     }
                     break;
                 case 10 : 
                     if (Radianes == isRadianes())
                         ANS = coseno();
                     else {
-                        ANS = setDegrees(coseno());
+                        ANS = Math.toRadians(ANS);
+                        ANS = coseno();
                     }
                     break;
                 case 11 : 
                     if (Radianes == isRadianes())
                         ANS = tangente();
                     else {
-                        ANS = setDegrees(tangente());
+                        ANS = Math.toRadians(ANS);
+                        ANS = tangente();
                     }
                     break;
             }
