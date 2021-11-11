@@ -32,10 +32,12 @@ public class Vista extends JFrame {
     private final JButton coseno = new JButton("cos");
     private final JButton tangente = new JButton("tan");
     
+    private final JButton e = new JButton("e");
+    private final JButton pi = new JButton("pi");
+    
     private final JButton igual = new JButton("=");
     private final JButton cE = new JButton("CE");
 
-    // Bandera lógica para para indicar el inicio de una nueva cifra
     private boolean nuevo = true;
 
     public Vista() {
@@ -43,26 +45,23 @@ public class Vista extends JFrame {
         this.setTitle("Calculadora");
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        this.setBounds(100, 100, 500, 400);
+        this.setBounds(100, 100, 500, 500);
 
         this.setVisible(true);
 
     }
 
     public void initComponents() {
-        // Diseña el menu
         JMenuBar barraMenus = new JMenuBar();
-        JMenu archivo = new JMenu("Archivo");
+        JMenu archivo = new JMenu("CALCULADORA - MIRANDA CHAVEZ - NICOLAS HERNANDEZ");
         JMenuItem salir = new JMenuItem("Salir");
         this.setJMenuBar(barraMenus);
 
         barraMenus.add(archivo);
         archivo.add(salir);
-
-        // Al desabilitar el LayoutManager, el programador tiene
-        // la responsabilidad de situar los componentes
-        this.setLayout(null); // Se deshabilita el Gestor de Distribución
-        display.setBounds(10, 5, 280, 40);
+        
+        this.setLayout(null); 
+        display.setBounds(10, 5, 450, 40);
         b1.setBounds(10, 50, 50, 50);
         b2.setBounds(70, 50, 50, 50);
         b3.setBounds(130, 50, 50, 50);
@@ -81,13 +80,16 @@ public class Vista extends JFrame {
         multi.setBounds(190, 110, 50, 50);
         div.setBounds(250, 110, 50, 50);
         
-        inverso.setBounds(310, 50, 90, 50);
-        cuadrado.setBounds(310, 110, 90, 50);
+        inverso.setBounds(310, 110, 90, 50);
+        cuadrado.setBounds(310, 170, 90, 50);
         raiz.setBounds(190, 170, 90, 50);
         raizcub.setBounds(190, 230, 90, 50);
         seno.setBounds(310, 230, 90, 50);
         coseno.setBounds(190, 290, 90, 50);
         tangente.setBounds(310, 290, 90, 50);
+        
+        e.setBounds(310, 50, 50, 50);
+        pi.setBounds(370, 50, 50,50);
         
         igual.setBounds(130, 230, 50, 50);
         cE.setBounds(10, 230, 50, 50);
@@ -98,7 +100,6 @@ public class Vista extends JFrame {
         display.setHorizontalAlignment(JTextField.RIGHT);
         display.setEditable(false);
 
-        // Agrega los elementos al JFrame
         this.add(display);
         this.add(b1);
         this.add(b2);
@@ -122,9 +123,10 @@ public class Vista extends JFrame {
         this.add(seno);
         this.add(coseno);
         this.add(tangente);
+        this.add(e);
+        this.add(pi);
         this.add(cE);
 
-        // Para la gestión de los eventos de Calculadora
         b0.addActionListener(evt -> gestionarBotones(evt));
         b1.addActionListener(evt -> gestionarBotones(evt));
         b2.addActionListener(evt -> gestionarBotones(evt));
@@ -135,6 +137,7 @@ public class Vista extends JFrame {
         b7.addActionListener(evt -> gestionarBotones(evt));
         b8.addActionListener(evt -> gestionarBotones(evt));
         b9.addActionListener(evt -> gestionarBotones(evt));
+        
         mas.addActionListener(evt -> gestionarBotones(evt));
         menos.addActionListener(evt -> gestionarBotones(evt));
         multi.addActionListener(evt -> gestionarBotones(evt));
@@ -147,16 +150,15 @@ public class Vista extends JFrame {
         coseno.addActionListener(evt -> gestionarBotones(evt));
         tangente.addActionListener(evt -> gestionarBotones(evt));
         
+        e.addActionListener(evt -> gestionarBotones(evt));
+        pi.addActionListener(evt -> gestionarBotones(evt));
+        
         igual.addActionListener(evt -> gestionarBotones(evt));
-
-        // Al ser una tecla con dos símbolos en la cara le asignamos
-        // un Listener diferente
+        
         cE.addActionListener(evt -> gestionarCE(evt));
 
-        // Gestión de menú
         salir.addActionListener(evt -> gestionarSalir(evt));
 
-        // Salida 
         class MyWindowAdapter extends WindowAdapter {
 
             @Override
@@ -168,7 +170,6 @@ public class Vista extends JFrame {
 
     }
 
-    // Métodos para gestión de eventos
     public void gestionarSalir(java.awt.event.ActionEvent evt) {
         exit();
     }
@@ -180,7 +181,6 @@ public class Vista extends JFrame {
         }
     }
 
-    // Gestión para botones numéricos y símbolos de operación
     public void gestionarBotones(java.awt.event.ActionEvent evt) {
 
         String textoBoton = evt.getActionCommand();
@@ -190,23 +190,33 @@ public class Vista extends JFrame {
 
         if (simbolo == 'C') {
             calculator.clearANS();
-            display.setText("");
-        } else if ((simbolo >= '0' && simbolo <= '9') || simbolo == '.') // En caso de número
+            display.setText("");  
+        } 
+        
+        else if ((simbolo >= '0' && simbolo <= '9') || simbolo == 'e' || simbolo == 'p') // En caso de número
         {
             if (nuevo) {
                 display.setText(""); 
             }
-            display.setText(display.getText() + simbolo);
+            if (textoBoton.equals("e"))
+                display.setText(display.getText() + "2.718");
+            else if (textoBoton.equals("pi"))
+                display.setText(display.getText() + "3.1416");
+            else 
+                display.setText(display.getText() + simbolo);
+            
             nuevo = false; 
-        } else if(simbolo=='+'||simbolo=='-'||simbolo=='*'||simbolo=='/'||simbolo=='=' || textoBoton.equals("x^-1")
+        } 
+        
+        else if(simbolo=='+'||simbolo=='-'||simbolo=='*'||simbolo=='/'||simbolo=='=' || textoBoton.equals("x^-1")
                 || textoBoton.equals("x^2") || textoBoton.equals("raiz") || textoBoton.equals("raiz 3") ||
-                textoBoton.equals("sen") || textoBoton.equals("cos") || textoBoton.equals("tan")) 
+                textoBoton.equals("sen") || textoBoton.equals("cos") || textoBoton.equals("tan") ||
+                textoBoton.equals("e") || textoBoton.equals("pi")) 
         {
             double numero = Double.parseDouble(display.getText());
             int operacion = idOperaciones(textoBoton);
 
-            calculator.operacion(numero, operacion, false);       
-
+            calculator.operacion(numero, operacion, false);
             display.setText("" + calculator.getANS()); 
 
             nuevo = true;
